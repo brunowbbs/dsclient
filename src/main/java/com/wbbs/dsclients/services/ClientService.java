@@ -33,4 +33,23 @@ public class ClientService {
 		
 	}
 
+	@Transactional
+	public ClientDTO insert(ClientDTO dto) {
+		Client client = generateClient(dto);
+		client = repository.save(client);
+		return new ClientDTO(client);
+	}
+	
+	
+	private Client generateClient(ClientDTO dto) {
+		Client client = new Client();
+		client.setName(dto.getName());
+		client.setCpf(dto.getCpf());
+		client.setIncome(dto.getIncome());
+		client.setBirthDate(dto.getBirthDate());
+		client.setChildren(dto.getChildren());
+		
+		return client;
+	}
+
 }
