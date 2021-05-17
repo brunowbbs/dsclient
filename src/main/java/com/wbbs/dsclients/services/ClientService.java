@@ -1,9 +1,8 @@
 package com.wbbs.dsclients.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +17,9 @@ public class ClientService {
 	private ClientRepository repository;
 	
 	@Transactional
-	public List<ClientDTO> findAll(){
-		List<Client> list = repository.findAll();
-		List<ClientDTO> dtoList = new ArrayList<>();
-		list.forEach(item -> dtoList.add(new ClientDTO(item)));
-		return dtoList;
+	public Page<ClientDTO> findAllPaged(PageRequest pageRequest){
+		Page<Client> list = repository.findAll(pageRequest);
+		return list.map(item -> new ClientDTO(item));
 	}
+
 }
